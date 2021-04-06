@@ -1,4 +1,4 @@
-import { Node } from "babel-core";
+import { Node } from "@babel/core";
 import { RawSourceMap } from "source-map";
 import { MetroRawSourceMap } from "./composeSourceMaps";
 export interface MetroTransformerResult {
@@ -23,3 +23,4 @@ export interface ReactNativeObfuscatingTransformerDefaultResult {
     map: string;
 }
 export declare function maybeTransformMetroResult(upstreamResult: MetroTransformerResult, { code, map }: ReactNativeObfuscatingTransformerDefaultResult, reactNativeMinorVersion?: number): MetroTransformerResult;
+export declare function generateAndConvert(ast: Node, filename: string): MetroTransformerResult;

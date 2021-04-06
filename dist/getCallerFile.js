@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getCallerFile = void 0;
 // This code taken from https://stackoverflow.com/a/29581862/1382997
 // Question by einstein https://stackoverflow.com/users/449132/einstein
 // Answer by Rhionin https://stackoverflow.com/users/1751376/rhionin

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getPositionOfSubstring = void 0;
 function getPositionOfSubstring(text, substring) {
     var lines = text.split(/\r?\n/);
     for (var line = 0; line < lines.length; line++) {

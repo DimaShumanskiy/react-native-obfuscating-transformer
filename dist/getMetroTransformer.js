@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateAndConvert = exports.maybeTransformMetroResult = exports.getMetroTransformer = void 0;
 var source_map_1 = require("source-map");
 var semver = require("semver");
 var composeSourceMaps_1 = require("./composeSourceMaps");
-var babylon = require("babylon");
-var babel_traverse_1 = require("babel-traverse");
+var babylon = require("@babel/parser");
+var traverse_1 = require("@babel/traverse");
+var generator_1 = require("@babel/generator");
 function getReactNativeMinorVersion() {
     var reactNativeVersionString = require("react-native/package.json").version;
     var parseResult = semver.parse(reactNativeVersionString);
@@ -16,7 +18,7 @@ function getReactNativeMinorVersion() {
 function getMetroTransformer(reactNativeMinorVersion) {
     if (reactNativeMinorVersion === void 0) { reactNativeMinorVersion = getReactNativeMinorVersion(); }
     if (reactNativeMinorVersion >= 59) {
-        return require('metro-react-native-babel-transformer/src/index');
+        return require("metro-react-native-babel-transformer/src/index");
     }
     else if (reactNativeMinorVersion >= 56) {
         return require("metro/src/reactNativeTransformer");
@@ -45,7 +47,7 @@ function maybeTransformMetroResult(upstreamResult, _a, reactNativeMinorVersion) 
         });
         var mapConsumer_1 = new source_map_1.SourceMapConsumer(map) // upstream types are wrong
         ;
-        babel_traverse_1.default.cheap(ast, function (node) {
+        traverse_1.default.cheap(ast, function (node) {
             if (node.loc) {
                 var originalStart = mapConsumer_1.originalPositionFor(node.loc.start);
                 if (originalStart.line) {
@@ -69,3 +71,24 @@ function maybeTransformMetroResult(upstreamResult, _a, reactNativeMinorVersion) 
     }
 }
 exports.maybeTransformMetroResult = maybeTransformMetroResult;
+function generateAndConvert(ast, filename) {
+    var generatorResult = generator_1.default(ast, {
+        filename: filename,
+        retainLines: true,
+        sourceMaps: true,
+        sourceFileName: filename,
+    });
+    if (!generatorResult.map) {
+        return { code: generatorResult.code };
+    }
+    var map = {
+        version: generatorResult.map.version + "",
+        mappings: generatorResult.map.mappings,
+        names: generatorResult.map.names,
+        sources: generatorResult.map.sources,
+        sourcesContent: generatorResult.map.sourcesContent,
+        file: generatorResult.map.file,
+    };
+    return { code: generatorResult.code, map: map };
+}
+exports.generateAndConvert = generateAndConvert;

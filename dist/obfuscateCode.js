@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.obfuscateCodePreservingSourceMap = exports.obfuscateCode = void 0;
 var Obfuscator = require("javascript-obfuscator");
 var composeSourceMaps_1 = require("./composeSourceMaps");
 function obfuscateCode(code, options) {
