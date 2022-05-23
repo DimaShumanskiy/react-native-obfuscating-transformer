@@ -16,7 +16,7 @@
     "@babel/generator": "^7.13.9",
     "@babel/traverse": "^7.13.13",
     "@babel/parser": "^7.13.13",
-    "javascript-obfuscator": "^2.11.0",
+    "javascript-obfuscator": "^4.0.0",
     "jju": "^1.3.0",
     "semver": "^5.4.1",
     "source-map": "^0.6.1"
@@ -45,7 +45,7 @@
     "metro-bundler": "^0.22.1",
     "np": "^4.0.2",
     "prettier": "^1.10.2",
-    "react-native": "^0.64.0",
+    "react-native": "^0.66.0",
     "ts-jest": "^22.0.1",
     "ts-node": "^4.1.0",
     "typescript": "^4.0.7"
